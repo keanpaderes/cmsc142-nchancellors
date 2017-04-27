@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="nchancy" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="nchancy" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="nchancy" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="nchancy" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>NChancy v1</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--PLACE STYLESHEETS HERE-->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/normalize.css">
+  <base href="/">
+</head>
+<body>
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <div class="container">
+      <div ng-view></div>
+  </div>
+
+  <!--VENDOR JS HERE-->
+  <script src="assets/js/jquery-3.2.1.min.js"></script>
+  <!--TEMP--><script src="assets/js/bootstrap.min.js"></script>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <!--ADD PAGES AND COMPONENTS JS HERE-->
+  <script src="testpage/testpage.js"></script>
+</body>
+</html>

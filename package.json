@@ -1,0 +1,27 @@
+{
+  "name": "cmsc142-nchancellors",
+  "version": "1.0.0",
+  "description": "Interface of the nchancellors solver created as project for CMSC 142.",
+  "scripts": {
+    "test": "echo \"Test tes\"",
+    "postinstall": "bower install",
+
+    "prestart": "npm install",
+    "start": "http-server -a localhost -p 1337 -c-1 ./app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keanpaderes/cmsc142-nchancellors.git"
+  },
+  "keywords": [
+    "Angular",
+    "NChancellors",
+    "web",
+    "solver"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keanpaderes/cmsc142-nchancellors/issues"
+  },
+  "homepage": "https://github.com/keanpaderes/cmsc142-nchancellors#readme"
+}
