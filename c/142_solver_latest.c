@@ -9,45 +9,6 @@ typedef struct {
   int lastRow;
 }board;
 
-struct node{
-  char* solution;
-  struct node *next;
-};
-
-int checkSolution(char *soln, struct node *headNode){
-  int ret = 1, check;
-  struct node *ptr = headNode;
-  char *holder;
-  while(ptr != NULL) {
-    holder = ptr->solution;
-    check = strcmp(soln, holder);
-    if(check == 0){
-      ret = 0;
-    }
-    ptr = ptr->next;
-  }
-  return ret;
-}
-
-void insertFirst(char *soln, struct node **headNode){
-  char *solna;
-  struct node *link = (struct node *)malloc(sizeof(struct node));
-  link->solution = soln;
-  link->next = *headNode;
-  *headNode = link;
-  solna = (*headNode)->solution;
-}
-
-void deleteAll(struct node **headNode){
-  struct node *tmp;
-  while(*headNode != NULL) {
-    tmp = *headNode;
-    *headNode = (*headNode)->next;
-    free(tmp);
-  }
-  printf("Freed\n");
-}
-
 void boardToString(board *b, int N, char* dest) {
   int i, j, temp;
   char c;
@@ -127,12 +88,13 @@ int main(){
   board *head;
   board *temp;
   board *stack[256];
-  struct node *headNode = NULL;
   char* boardString;
   int i, j, k, a, b, row, col;
   int numOfPuzzle, N;
   int check, currNumOfSolutions = 0;
   int tos = 0;
+  int validBoard = 1;
+  int tempRow, tempCol, hasOne;
 
   fp = fopen("input.txt", "r");
 
@@ -142,67 +104,112 @@ int main(){
     fscanf( fp, "%d", &numOfPuzzle);
     printf("No. of Puzzles : %d\n", numOfPuzzle);
 
-    for(i=0; i<numOfPuzzle; i++){
-      fscanf( fp, "%d", &N);
-      printf("N: %d\n", N);
+	for(i=0; i<numOfPuzzle; i++){
+	  fscanf( fp, "%d", &N);
+	  printf("N: %d\n", N);
 
-      head = (board*)malloc(sizeof(board));
-      head->b = (int**)malloc(sizeof(int*)*N);
-      head->count = 0;
-      head->lastRow = N;
-      //CREATE THE BOARD
-      for(j=0; j<N; j++){
-        head->b[j] = (int*)malloc(sizeof(int)*N);
-        for(k=0; k<N; k++){
-          fscanf( fp, "%d", &head->b[j][k]);
-        }
-      }
+	  head = (board*)malloc(sizeof(board));
+	  head->b = (int**)malloc(sizeof(int*)*N);
+	  head->count = 0;
+	  head->lastRow = N;
+	  //CREATE THE BOARD
+		for(j=0; j<N; j++){
+			head->b[j] = (int*)malloc(sizeof(int)*N);
+			for(k=0; k<N; k++){
+			  fscanf( fp, "%d", &head->b[j][k]);
+			  if(head->b[j][k] == 1)
+			    head->count++;
+			}
+		}
+	
+	// check if board is VALID	
+	for(a=0; a<N; a++){
+		for(b=0; b<N; b++){
+			if(head->b[a][b] == 1 && !valid(head, N, a, b)){
+				validBoard = 0;
+				break;
+			}
+		}//close for
+	}//close for
 
-      /*********************************************/
-      stack[tos++] = head;
+    /*********************************************/		
+    if(head->count == N){
+			++currNumOfSolutions;
+	}
+	
+    if(validBoard && (currNumOfSolutions == 0)){
+      	stack[tos++] = head;
 
-      while(tos!=0){
-        //POP TOS
-        // printf("haha");
-        head = stack[--tos];
+		while(tos!=0){
+			//POP TOS
+			// printf("haha");
+			head = stack[--tos];
 
-        if(head->count == N){
-          // boardString = (char *)malloc((N*N)*sizeof(char));
-          // boardToString(head, N, boardString);
-          // check = checkSolution(boardString, headNode);
+			// printBoard(stack[tos], N);
+			if(head->count == N){
+			  ++currNumOfSolutions;
+			  free(head);
+			  continue;
+			}
 
-            ++currNumOfSolutions;
-            //insertFirst(boardString, &headNode);
-            //printf("\nSolution found! %d\n", head->count);
-            printBoard(head, N);
-            free(head);
-          //}
-          continue;
-        }
+			row = N-1;
 
-        row = head->lastRow-1;
-        if(row < 0){
-              free(head);
-              continue;
-        }
-        for(col = N-1 ; col >= 0 ; col--){
-            // printf("%d %d | ", row, col);
-            if(head->b[row][col] == 1) continue;
-            temp = createBoard(head, N);
-            temp->b[row][col] = 1;
-            temp->count++;
-            if(valid(temp, N, row, col)){
-              stack[tos++] = temp;
-            } else free(temp);
-        }
-        // printf("\n");
-      } // CLOSE WHILE
-      /*********************************************/
-      printf("Current number of solutions: %i\n", currNumOfSolutions);
-      currNumOfSolutions = 0;
-      deleteAll(&headNode);
-      //Delete solutions
+			hasOne = 0;
+			for(tempRow = N-1 ; tempRow >= 0 ; tempRow--){
+				hasOne = 0;
+				for(tempCol = N-1 ; tempCol >= 0 ; tempCol--){
+					if(head->b[tempRow][tempCol] == 1){
+						hasOne = 1;
+					}
+				}
+				if(hasOne == 0){
+					row = tempRow;
+					break;
+				}
+			}
 
+			if(row < 0){
+			  free(head);
+			  continue;
+			}
+
+			/* printf("tempRow: %d\n", row);
+			// //if current row already contains a chancellor, skip
+			// for(tempRow = row ; tempRow >= 0 ; tempRow--){
+			// 	for(col = N-1 ; col >= 0 ; col--){
+			// 		printf("%d ", head->b[tempRow][col]);
+			// 	  if(head->b[tempRow][col] == 1){
+			// 	  	printf("skip row: %d\n", tempRow);
+			// 	    row = tempRow-1;
+			// 	    head->lastRow = tempRow-1;
+			// 	    break;
+			// 	  }
+			// 	}
+
+			// 	  printf("\n");
+			}*/
+			
+			for(col = N-1 ; col >= 0 ; col--){
+			  if(head->b[row][col] == 1) continue;
+			  temp = createBoard(head, N);
+			  temp->b[row][col] = 1;
+			  temp->count++;
+			  if(valid(temp, N, row, col)){
+			    stack[tos++] = temp;
+			  } else free(temp);
+			}
+			// printf("\n");
+		} // CLOSE WHILE
+	/*********************************************/
+    }else if(!validBoard){
+    	printf("Invalid board\n");
+    }else{
+    	printf("Given board already a solution\n");
+    }
+
+	printf("Current number of solutions: %i\n", currNumOfSolutions);
+	currNumOfSolutions = 0;
+	//Delete solutions
     }
   }
 
