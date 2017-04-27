@@ -1,4 +1,3 @@
 node_modules/*
 .bowerrc
-app/bower_components/*
 c/a.out
