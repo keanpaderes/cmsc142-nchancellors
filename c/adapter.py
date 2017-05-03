@@ -6,10 +6,10 @@ string = ""
 solutions = []
 for line in output:
     if '=' in line:
-        solutions.append(string)
+        solutions.append(string.rstrip(","))
         string = ""
     else:
-        string+=line.strip() + " "
+        string+=line.strip() + ","
 
 for sol in solutions:
     print(sol)
