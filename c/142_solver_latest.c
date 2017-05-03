@@ -84,7 +84,7 @@ int valid(board *b, int N, int row, int col){
 
 int main(){
 
-  FILE *fp;
+  FILE *fp, *out;
   board *head;
   board *temp;
   board *stack[256];
@@ -97,16 +97,17 @@ int main(){
   int tempRow, tempCol, hasOne;
 
   fp = fopen("input.txt", "r");
+  out = fopen("output.txt", "w");
 
   if(fp == NULL){
-    printf("File reading error!");
+    // printf("File reading error!");
   } else{
     fscanf( fp, "%d", &numOfPuzzle);
-    printf("No. of Puzzles : %d\n", numOfPuzzle);
+    // printf("No. of Puzzles : %d\n", numOfPuzzle);
 
 	for(i=0; i<numOfPuzzle; i++){
 	  fscanf( fp, "%d", &N);
-	  printf("N: %d\n", N);
+	//   printf("N: %d\n", N);
 
 	  head = (board*)malloc(sizeof(board));
 	  head->b = (int**)malloc(sizeof(int*)*N);
@@ -121,8 +122,8 @@ int main(){
 			    head->count++;
 			}
 		}
-	
-	// check if board is VALID	
+
+	// check if board is VALID
 	for(a=0; a<N; a++){
 		for(b=0; b<N; b++){
 			if(head->b[a][b] == 1 && !valid(head, N, a, b)){
@@ -132,11 +133,11 @@ int main(){
 		}//close for
 	}//close for
 
-    /*********************************************/		
+    /*********************************************/
     if(head->count == N){
 			++currNumOfSolutions;
 	}
-	
+
     if(validBoard && (currNumOfSolutions == 0)){
       	stack[tos++] = head;
 
@@ -148,6 +149,17 @@ int main(){
 			// printBoard(stack[tos], N);
 			if(head->count == N){
 			  ++currNumOfSolutions;
+              //CREATE THE BOARD
+                for(j=0; j<N; j++){
+                    for(k=0; k<N; k++){
+                      fprintf(out, "%d", stack[tos]->b[j][k]);
+                    }
+                    fprintf(out, "\n");
+                }
+                for(j=0;j<N;j++){
+                    fprintf(out, "=");
+                }
+                fprintf(out, "\n");
 			  free(head);
 			  continue;
 			}
@@ -188,7 +200,7 @@ int main(){
 
 			// 	  printf("\n");
 			}*/
-			
+
 			for(col = N-1 ; col >= 0 ; col--){
 			  if(head->b[row][col] == 1) continue;
 			  temp = createBoard(head, N);
@@ -202,18 +214,20 @@ int main(){
 		} // CLOSE WHILE
 	/*********************************************/
     }else if(!validBoard){
-    	printf("Invalid board\n");
+    	// printf("Invalid board\n");
     }else{
-    	printf("Given board already a solution\n");
+    	// printf("Given board already a solution\n");
     }
 
-	printf("Current number of solutions: %i\n", currNumOfSolutions);
+	// printf("Current number of solutions: %i\n", currNumOfSolutions);
 	currNumOfSolutions = 0;
 	//Delete solutions
     }
   }
 
   fclose(fp);
+  fclose(out);
+
 
   return 0;
 }
