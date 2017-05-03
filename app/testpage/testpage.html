@@ -1,5 +1,65 @@
-<div class="main container-fluid">
-    <div class="center">
-        Hello this is test page pls ignore.
-    </div>
+<style type="text/css">
+  .cell{
+    height: 100px;
+    width: 100px;
+  }
+  .image{
+  	margin-left: -14px;
+	margin-top: 10px;
+  }
+  .logo{
+  	
+  }
+</style>
+
+<div class="cyan lighten-5">
+	<!-- START OF SIDENAV -->
+	<ul id="slide-out" class="side-nav fixed center-align">
+		<div class="card-panel cyan darken-4">
+			<div class="row valign-wrapper">
+				<div class="col s12">
+					<img src="img/chancellor.png" class="responsive-img col s3 logo">
+					<div class="col s12 center-align">
+						<h5 class="white-text"> <b>N-CHANCELLOR</b> </h5>
+						<h6 class="white-text"> How can N chancellors be placed on an NxN chessboard so that no two of them attack each other?</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<form action="#">
+			<div class="file-field input-field">
+				<div class="waves-effect waves-light btn cyan darken-4">
+					<span>File</span>
+					<input type="file">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+		</form>
+
+		<h6> OR </h6> </br>
+		<div class="row">
+			<div class="input-field col s6">
+				<input id="icon_prefix" type="text" class="boardSize">
+				<label for="icon_prefix">Board Size</label>
+			</div>
+			<a class="waves-effect waves-light btn col s6 cyan darken-4" id="createBoard">Create Board</a>
+
+			<div class="col s12">
+				<a class="waves-effect waves-light btn col s12 cyan darken-4" id='solve'>Solve</a> 
+			</div>
+		</div>
+	</ul>
+	<!-- END OF SIDENAV -->
+
+    <br/><br/>
+	<div class="row center-align">
+		<div class="col s9 offset-s3">
+		<div id="board" class="col s12"></div>
+		</div>
+	</div> 
+	<br/><br/>
 </div>
+
