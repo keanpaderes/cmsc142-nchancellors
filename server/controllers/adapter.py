@@ -1,6 +1,6 @@
 from subprocess import call
 
-call("./a.out")
+call("./a.out", shell=True)
 output = open("output.txt", "r")
 string = ""
 solutions = []
@@ -13,5 +13,4 @@ for line in output:
 
 for sol in solutions:
     print(sol)
-    sys.stdout.flush()
 output.close

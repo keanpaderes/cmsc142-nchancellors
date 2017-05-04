@@ -11,8 +11,8 @@ angular.module('nchancy.testpage', [
   });
 }])
 
-.controller('TestpageCtrl', ['$scope',
-    function($scope) {
+.controller('TestpageCtrl', ['$scope', '$http',
+    function($scope, $http) {
 
 	    var N = 0;
 
@@ -42,7 +42,7 @@ angular.module('nchancy.testpage', [
 					    		$(this).data('clicked', true);
 					    	}
 						});
-					} else{ 
+					} else{
 						if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").click(function() {
 					    	if($(this).data('clicked')){
 					    		$(this).children("img").remove();
@@ -84,7 +84,7 @@ angular.module('nchancy.testpage', [
 			$('#board').children('a').each(function () {
 			   if($(this).data('clicked')) array[i][j] = 1;
 			   else array[i][j] = 0;
-			   
+
 			   if(j==N){
 					j=0;
 					i++;
@@ -93,6 +93,14 @@ angular.module('nchancy.testpage', [
 			   }
 
 			});
+            $http.get('http://localhost:1337/api/tools/generate')
+                .then(function (res, err) {
+                    if(err){
+                        console.log(err);
+                    }
+                    console.log("SUCCESS!");
+                    console.log(res.solutions);
+                });
 		});
 	}
 ]);
