@@ -114,8 +114,6 @@ angular.module('nchancy.testpage', [
                 .then(function successCallback(res) {
                     console.log("solutions");
                     console.log(res.data.solutions);
-                    console.log("matrix");
-                    console.log(ToString(array));
                 }, function errorCallback(err) {
                     console.log(err);
                 });
