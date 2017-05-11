@@ -3,6 +3,6 @@ var toolsCtrl = require('../controllers/tools.controller');
 var router = express.Router();
 
 router.route('/generate')
-    .get(toolsCtrl.generateSolutions);
-    
+    .post(toolsCtrl.generateSolutions);
+
 module.exports = router;
