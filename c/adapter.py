@@ -1,7 +1,7 @@
-from subprocess import call
+import sys
+import subprocess
 
-call("./a.out")
-output = open("output.txt", "r")
+output = open(sys.argv[1]+"/output.txt", "r+")
 string = ""
 solutions = []
 for line in output:
@@ -13,5 +13,5 @@ for line in output:
 
 for sol in solutions:
     print(sol)
-    sys.stdout.flush()
-output.close
+
+output.close()

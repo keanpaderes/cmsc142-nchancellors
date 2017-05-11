@@ -94,12 +94,10 @@ angular.module('nchancy.testpage', [
 
 			});
             $http.get('http://localhost:1337/api/tools/generate')
-                .then(function (res, err) {
-                    if(err){
-                        console.log(err);
-                    }
-                    console.log("SUCCESS!");
-                    console.log(res.solutions);
+                .then(function successCallback(res) {
+                    console.log(res.data.solutions);
+                }, function errorCallback(err) {
+                    console.log(err);
                 });
 		});
 	}
