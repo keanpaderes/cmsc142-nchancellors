@@ -15,49 +15,53 @@ angular.module('nchancy.testpage', [
     function($scope) {
 
 	    var N = 0;
+	    console.log($('#board').width());
+
+	    $(window).resize(function(){
+		    console.log("resize");
+		});
 
 		$("#createBoard").click(function(){
 			N = parseInt( $('.boardSize').val() );
-			$('.boardSize').val("")
-			console.log(N);
+			$('.boardSize').val("");
 
 			for(var i=0; i<N; i++){
 				for(var j=0; j<N; j++){
 					if(i % 2 == 1){
-						if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell valign-wrapper").click(function() {
+						if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell valign-wrapper").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
 					    	if($(this).data('clicked')){
-					    		$(this).children("img").remove();
+					    		$(this).children("div").children("img").remove();
 					    		$(this).data('clicked', false);
 					    	} else{
-					    		$(this).append('<img src="img/chancellor.png" height="70px" width="70px" class="image">');
+					    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 					    		$(this).data('clicked', true);
 					    	}
 						});
-			    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").click(function() {
+			    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
 					    	if($(this).data('clicked')){
-					    		$(this).children("img").remove();
+					    		$(this).children("div").children("img").remove();
 					    		$(this).data('clicked', false);
 					    	} else{
-					    		$(this).append('<img src="img/chancellor.png" height="70px" width="70px" class="image">');
+					    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 					    		$(this).data('clicked', true);
 					    	}
 						});
 					} else{ 
-						if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").click(function() {
+						if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
 					    	if($(this).data('clicked')){
-					    		$(this).children("img").remove();
+					    		$(this).children("div").children("img").remove();
 					    		$(this).data('clicked', false);
 					    	} else{
-					    		$(this).append('<img src="img/chancellor.png" height="70px" width="70px" class="image">');
+					    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 					    		$(this).data('clicked', true);
 					    	}
 						});
-			    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell").click(function() {
+			    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
 					    	if($(this).data('clicked')){
-					    		$(this).children("img").remove();
+					    		$(this).children("div").children("img").remove();
 					    		$(this).data('clicked', false);
 					    	} else{
-					    		$(this).append('<img src="img/chancellor.png" height="70px" width="70px" class="image">');
+					    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 					    		$(this).data('clicked', true);
 					    	}
 						});
