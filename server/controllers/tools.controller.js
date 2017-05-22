@@ -19,7 +19,11 @@ module.exports = {
                 });
             }
 
-            var input = '1\n' + req.body.size + '\n' + req.body.input;
+            if(req.body.isFile){
+                var input = req.body.input;
+            } else{
+                var input = '1\n' + req.body.size + '\n' + req.body.input;
+            }
 
             fs.writeFile(config.rootname + '/input.txt', input,
                 function(err) {
