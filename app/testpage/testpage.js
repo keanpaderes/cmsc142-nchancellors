@@ -11,8 +11,8 @@ angular.module('nchancy.testpage', [
   });
 }])
 
-.controller('TestpageCtrl', ['$scope',
-    function($scope) {
+.controller('TestpageCtrl', ['$scope', '$http',
+    function($scope, $http) {
 
 	    var N = 0;
 	    console.log($('#board').width());
@@ -80,6 +80,19 @@ angular.module('nchancy.testpage', [
 		  return arr;
 		}
 
+        function ToString(arr) {
+            var retString = '';
+            for(var i = 0; i < arr.length; i++) {
+                for(var j = 0; j < arr.length; j++) {
+                    var added = (j == arr.length-1)?
+                        "\n":" ";
+                    retString += (i == arr.length-1 && j == arr.length-1)?
+                        arr[i][j] : arr[i][j] + added;
+                }
+            }
+            return retString;
+        }
+
 		$("#solve").click(function(){
 			var array = Create2DArray(N);
 			var i = 0;
@@ -88,8 +101,8 @@ angular.module('nchancy.testpage', [
 			$('#board').children('a').each(function () {
 			   if($(this).data('clicked')) array[i][j] = 1;
 			   else array[i][j] = 0;
-			   
-			   if(j==N){
+
+			   if(j==N-1){
 					j=0;
 					i++;
 			   } else{
@@ -97,6 +110,17 @@ angular.module('nchancy.testpage', [
 			   }
 
 			});
+
+            $http.post('http://localhost:1337/api/tools/generate', {
+                input: ToString(array),
+                size: N
+            })
+                .then(function successCallback(res) {
+                    console.log("solutions");
+                    console.log(res.data.solutions);
+                }, function errorCallback(err) {
+                    console.log(err);
+                });
 		});
 	}
 ]);
