@@ -81,7 +81,6 @@ int valid(board *b, int N, int row, int col){
   return 1;
 }
 
-
 int main(){
 
   FILE *fp, *out;
@@ -100,14 +99,11 @@ int main(){
   out = fopen("output.txt", "w");
 
   if(fp == NULL){
-    // printf("File reading error!");
   } else{
     fscanf( fp, "%d", &numOfPuzzle);
-    // printf("No. of Puzzles : %d\n", numOfPuzzle);
 
 	for(i=0; i<numOfPuzzle; i++){
 	  fscanf( fp, "%d", &N);
-	//   printf("N: %d\n", N);
 
 	  head = (board*)malloc(sizeof(board));
 	  head->b = (int**)malloc(sizeof(int*)*N);
@@ -142,11 +138,8 @@ int main(){
       	stack[tos++] = head;
 
 		while(tos!=0){
-			//POP TOS
-			// printf("haha");
 			head = stack[--tos];
 
-			// printBoard(stack[tos], N);
 			if(head->count == N){
 			  ++currNumOfSolutions;
               //CREATE THE BOARD
@@ -185,22 +178,24 @@ int main(){
 			  continue;
 			}
 
-			/* printf("tempRow: %d\n", row);
-			// //if current row already contains a chancellor, skip
-			// for(tempRow = row ; tempRow >= 0 ; tempRow--){
-			// 	for(col = N-1 ; col >= 0 ; col--){
-			// 		printf("%d ", head->b[tempRow][col]);
-			// 	  if(head->b[tempRow][col] == 1){
-			// 	  	printf("skip row: %d\n", tempRow);
-			// 	    row = tempRow-1;
-			// 	    head->lastRow = tempRow-1;
-			// 	    break;
-			// 	  }
-			// 	}
+			/* 
+      printf("tempRow: %d\n", row);
+			//if current row already contains a chancellor, skip
+			for(tempRow = row ; tempRow >= 0 ; tempRow--){
+				for(col = N-1 ; col >= 0 ; col--){
+					printf("%d ", head->b[tempRow][col]);
+				  if(head->b[tempRow][col] == 1){
+				  	printf("skip row: %d\n", tempRow);
+				    row = tempRow-1;
+				    head->lastRow = tempRow-1;
+				    break;
+				  }
+				}
 
-			// 	  printf("\n");
-			}*/
-
+				  printf("\n");
+			}
+      */
+      
 			for(col = N-1 ; col >= 0 ; col--){
 			  if(head->b[row][col] == 1) continue;
 			  temp = createBoard(head, N);

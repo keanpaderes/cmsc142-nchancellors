@@ -15,10 +15,13 @@ angular.module('nchancy.testpage', [
     function($scope, $http) {
 
     	$(".button-collapse").sideNav();
+    	$('.modal').modal();
+    	$('.carousel').carousel();
+
     	var inputBoard;
     	var isFileInput = false;
 
-    	/***********************  FILE READING ***********************/
+    	/*********************** FILE READING ***********************/
     	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		  console.log('The File APIs are fully supported in this browser.');
 		} else {
@@ -28,14 +31,12 @@ angular.module('nchancy.testpage', [
 		function handleFileSelect(evt) {
 			isFileInput = true;
 			$('#createBoard').addClass('disabled');
-			var files = evt.target.files; // FileList object
+			var files = evt.target.files;
 
-			// Loop through the FileList and render image files as thumbnails.
 			for (var i = 0, f; f = files[i]; i++) {
 
 				var reader = new FileReader();
 
-				// Closure to capture the file information.
 				reader.onload = (function(theFile) {
 					return function(e) {
 						inputBoard = e.target.result;
@@ -48,71 +49,111 @@ angular.module('nchancy.testpage', [
 		}
 
 		document.getElementById('files').addEventListener('change', handleFileSelect, false);
-		/*************************************************************/
+		/************************************************************/
 
+		/************************ READ BOARD ************************/
 	    var N = 0;
 
+	    // creates the board
 		$("#createBoard").click(function(){
 			N = parseInt( $('.boardSize').val() );
 			$('.boardSize').val("");
 
-			for(var i=0; i<N; i++){
-				for(var j=0; j<N; j++){
-					if(i % 2 == 1){
-						if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
-					    	if($(this).data('clicked')){
-					    		$(this).children("div").children("img").remove();
-					    		$(this).data('clicked', false);
-					    	} else{
-					    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
-					    		$(this).data('clicked', true);
-					    	}
-						});
-			    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
-					    	if($(this).data('clicked')){
-					    		$(this).children("div").children("img").remove();
-					    		$(this).data('clicked', false);
-					    	} else{
-					    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
-					    		$(this).data('clicked', true);
-					    	}
-						});
-					} else{ 
-						if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
-					    	if($(this).data('clicked')){
-					    		$(this).children("div").children("img").remove();
-					    		$(this).data('clicked', false);
-					    	} else{
-					    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
-					    		$(this).data('clicked', true);
-					    	}
-						});
-			    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
-					    	if($(this).data('clicked')){
-					    		$(this).children("div").children("img").remove();
-					    		$(this).data('clicked', false);
-					    	} else{
-					    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
-					    		$(this).data('clicked', true);
-					    	}
-						});
+			if(N <= 3 || isNaN(N)){
+				$('#invalid').modal('open');
+			} else{
+				$('#fileButton').addClass('disabled');
+				$('#createBoard').addClass('disabled');
+
+				for(var i=0; i<N; i++){
+					for(var j=0; j<N; j++){
+						if(i % 2 == 1){
+							if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
+						    	if($(this).data('clicked')){
+						    		$(this).children("div").children("img").remove();
+						    		$(this).data('clicked', false);
+						    	} else{
+						    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
+						    		$(this).data('clicked', true);
+						    	}
+							});
+				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
+						    	if($(this).data('clicked')){
+						    		$(this).children("div").children("img").remove();
+						    		$(this).data('clicked', false);
+						    	} else{
+						    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
+						    		$(this).data('clicked', true);
+						    	}
+							});
+						} else{ 
+							if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
+						    	if($(this).data('clicked')){
+						    		$(this).children("div").children("img").remove();
+						    		$(this).data('clicked', false);
+						    	} else{
+						    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
+						    		$(this).data('clicked', true);
+						    	}
+							});
+				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
+						    	if($(this).data('clicked')){
+						    		$(this).children("div").children("img").remove();
+						    		$(this).data('clicked', false);
+						    	} else{
+						    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
+						    		$(this).data('clicked', true);
+						    	}
+							});
+						}
+				        $('#board').append(rowData);
 					}
-			        $('#board').append(rowData);
+					$('#board').append('<br/>');
 				}
-				$('#board').append('<br/>');
 			}
 		});
 
-		function checkBoard(){
-			console.log('checking board');
+		function valid(board, row, col, num){
+
+			// check ROW
+			for(var i=0; i<num; i++){
+				if(i == row) continue;
+				if(board[i][col] == 1) return false;
+			}
+
+			// check COLUMN
+			for(var i=0; i<num; i++){
+				if(i == col) continue;
+				if(board[row][i] == 1) return false;
+			}
+
+			// check L moves
+			if(row - 2>=0 && col + 1<num && board[row - 2][col + 1]) return false;
+			if(row - 1>=0 && col + 2<num && board[row - 1][col + 2]) return false;
+			if(row + 1<num && col + 2<num && board[row + 1][col + 2]) return false;
+			if(row + 2<num && col + 1<num && board[row + 2][col + 1]) return false;
+			if(row + 2<num && col - 1>=0 && board[row + 2][col - 1]) return false;
+			if(row + 1<num && col - 2>=0 && board[row + 1][col - 2]) return false;
+			if(row - 1>=0 && col - 2>=0 && board[row - 1][col - 2]) return false;
+			if(row - 2>=0 && col - 1>=0 && board[row - 2][col - 1]) return false;
+
+			return true;
 		}
 
-		var classname = document.getElementsByClassName("cell");
+		function checkBoard(board, num){
 
-		for (var i=0; i<classname.length; i++) {
-		    classname[i].addEventListener('click', checkBoard, false);
+			for(var a=0; a<num; a++){
+				for(var b=0; b<num; b++){
+					if(board[a][b] == 1 && !valid(board, a, b, num)){
+						return false;
+						break;
+					}
+				}
+			}
+			return true;
 		}
 
+		/************************************************************/
 
 		function Create2DArray(rows) {
 		  var arr = [];
@@ -157,7 +198,6 @@ angular.module('nchancy.testpage', [
         		}
         		$('#solutions').append('<br/>');
         	}
-
         }
 
         function convertBoardToArray(){
@@ -180,26 +220,64 @@ angular.module('nchancy.testpage', [
 			return array;
         }
 
+        function chechTextFileIfValid(board){
+        	board = board.split("\n");
+        	var count = 1;
+        	var noOfPuzzles = board[0];
+        	var listOfboard = [];
+
+        	for(var i=0; i<noOfPuzzles; i++){
+        		var size = board[count++];
+        		var array = Create2DArray(size);
+        		for(var j=0; j<size; j++){
+        			var row = board[count++].split(" ");
+        			for(var k=0; k<size; k++){
+        				array[j][k] = parseInt(row[k]);
+        			}
+        		}
+        		listOfboard.push(array);
+        	}
+        	
+        	for(var i=0; i<listOfboard.length; i++){
+        		if( !checkBoard(listOfboard[i], listOfboard[i].length) ){
+        			return false;
+        			break;
+        		}
+        	}
+
+        	return true;
+        }
+
 		$("#solve").click(function(){
 			var solveBoard;
+			var isValid = true;
 
 			if(isFileInput){
-				solveBoard = inputBoard;  
+				if(chechTextFileIfValid(inputBoard)) solveBoard = inputBoard;
+				else{
+					isValid = false;
+					$('#invalidBoard').modal('open');
+				}
 			} else{
 				var array = convertBoardToArray();
-				solveBoard = ToString(array);
+				if(checkBoard(array, N)) solveBoard = ToString(array);
+				else{
+					isValid = false;
+					$('#invalidBoard').modal('open');
+				} 
 			}
 
-            $http.post('http://localhost:1337/api/tools/generate', {
-            	isFile: isFileInput,
-                input: solveBoard,
-                size: N
-            })
-                .then(function successCallback(res) {
+			if(isValid){
+				$http.post('http://localhost:1337/api/tools/generate', {
+	            	isFile: isFileInput,
+	                input: solveBoard,
+	                size: N
+	            }).then(function successCallback(res) {
                     showSolutions(res.data.solutions);
                 }, function errorCallback(err) {
                     console.log(err);
                 });
+			}
 		});
 	}
 ]);

@@ -13,6 +13,10 @@
 		height: 300%;
 	    width: 300%;
 	}
+	.imageSolution{
+		height: 10%;
+	    width: 10%;
+	}
 </style>
 
 <div class="cyan lighten-5">
@@ -21,7 +25,7 @@
 		<div class="card-panel cyan darken-4">
 			<div class="row valign-wrapper">
 				<div class="col s12">
-					<img src="img/chancellor.png" class="responsive-img col s3 logo">
+					<img src="img/chancellor.png" class="responsive-img col s3 offset-s4">
 					<div class="col s12 center-align">
 						<h5 class="white-text"> <b>N-CHANCELLOR</b> </h5>
 						<h6 class="white-text"> How can N chancellors be placed on an NxN chessboard so that no two of them attack each other?</h6>
@@ -32,7 +36,7 @@
 
 		<form action="">
 			<div class="file-field input-field">
-				<div class="waves-effect waves-light btn cyan darken-4">
+				<div class="waves-effect waves-light btn cyan darken-4" id="fileButton">
 					<span>File</span>
 					<input type="file" id="files" name="files[]" />
 				</div>
@@ -65,9 +69,28 @@
 			<div id="board" class="col s12"></div>
 			<br/><br/>
 			<div class="divider"></div>
-			<div id="solutions" class="col s12"></div>
+			<div id="solutions" class="col s12 row"></div>
 		</div>
 	</div> 
 	<br/><br/>
-</div>
 
+	<div id="invalid" class="modal">
+		<div class="modal-content">
+			<h4>Invalid board size</h4>
+			<p>Please insert a board size higher than 3.</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat cyan darken-4 white-text">Close</a>
+		</div>
+	</div>
+
+	<div id="invalidBoard" class="modal">
+		<div class="modal-content">
+			<h4>Invalid board input</h4>
+			<p>No two chancellors should be on the same row, column, or L-position.</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat cyan darken-4 white-text">Close</a>
+		</div>
+	</div>
+</div>
