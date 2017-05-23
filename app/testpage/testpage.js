@@ -88,7 +88,7 @@ angular.module('nchancy.testpage', [
 						    		var array = convertBoardToArray();
 						    		if(checkIfSolved(array, N)){
 						    			$('#winner').modal('open');
-						    		}  
+						    		}
 						    	}
 							});
 				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
@@ -101,7 +101,7 @@ angular.module('nchancy.testpage', [
 						    		var array = convertBoardToArray();
 						    		if(checkIfSolved(array, N)){
 						    			$('#winner').modal('open');
-						    		} 
+						    		}
 						    	}
 							});
 						} else{
@@ -115,7 +115,7 @@ angular.module('nchancy.testpage', [
 						    		var array = convertBoardToArray();
 						    		if(checkIfSolved(array, N)){
 						    			$('#winner').modal('open');
-						    		} 
+						    		}
 						    	}
 							});
 				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
@@ -128,7 +128,7 @@ angular.module('nchancy.testpage', [
 						    		var array = convertBoardToArray();
 						    		if(checkIfSolved(array, N)){
 						    			$('#winner').modal('open');
-						    		} 
+						    		}
 						    	}
 							});
 						}
@@ -223,20 +223,20 @@ angular.module('nchancy.testpage', [
             	var list = $('<li></li>');
             	var divHeader = $('<div><b>BOARD '+ (h+1) +'</b> (' + puzzles[h].length + ' solution/s)</div>').addClass('collapsible-header');
             	list.append(divHeader);
-            	var divBody = $('<div></div>').addClass('collapsible-body col s12'); 
+            	var divBody = $('<div></div>').addClass('collapsible-body col s12');
             	divBody.append('<br/>');
-            	for(var i=0; i<puzzles[h].length; i++){	
+            	for(var i=0; i<puzzles[h].length; i++){
             		for(var j=0; j<puzzles[h][i].length; j++){
             			for(var k=0; k<puzzles[h][i][j].length; k++){
             				if(j % 2 == 1){
     							if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
     				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
-            
+
     				    		if(puzzles[h][i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
     						} else{
     							if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
     				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
-            
+
     				    		if(puzzles[h][i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
     						}
     				        divBody.append(rowData);
@@ -245,8 +245,8 @@ angular.module('nchancy.testpage', [
             		}
             		divBody.append('<br/>');
             	}
-            	var buttons = $(' <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="waves-effect waves-light btn col s3 offset-s2 cyan darken-4">Previous</button> <button ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1" class="waves-effect waves-light btn col s3 offset-s2 cyan darken-4">Next</button>');
-            		divBody.append(buttons);
+            	// var buttons = $(' <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="waves-effect waves-light btn col s3 offset-s2 cyan darken-4">Previous</button> <button ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1" class="waves-effect waves-light btn col s3 offset-s2 cyan darken-4">Next</button>');
+            	// 	divBody.append(buttons);
             		list.append(divBody);
             	$('#solutions').append(list);
             }
@@ -298,7 +298,7 @@ angular.module('nchancy.testpage', [
         			if(checkIfSolved(listOfboard[i], listOfboard[i].length)){
 		    			$('#solvedTextFile').modal('open');
 		    			break;
-		    		}  
+		    		}
         		}
         	}
 
