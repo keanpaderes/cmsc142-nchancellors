@@ -8,8 +8,8 @@ module.exports = {
     generateSolutions: function(req, res, next) {
         var raw = '', returnArray = [];
         var _scriptPath = config.rootname;
-        var pyshell = PythonShell.run('adapter.py', { mode:'text',
-            scriptPath: _scriptPath, args:  [config.rootname] });
+        // var pyshell = PythonShell.run('adapter.py', { mode:'text',
+        //     scriptPath: _scriptPath, args:  [config.rootname] });
 
         fs.stat(config.rootname + '/input.txt', function (err, stats) {
             if (!err) {
@@ -30,31 +30,59 @@ module.exports = {
                     if (err) return console.error(err);
                     exec('./a.out', {cwd:config.rootname}, function(err, data) {
                          if(err) next(err);
-                         pyshell.stdout.on('data', function(data){
-                             raw = data.toString().trim();
-                             console.log(raw);
-                         });
+                        //  pyshell.stdout.on('data', function(data){
+                        //      raw = data.toString().trim();
+                        //      console.log(raw);
+                        //  });
+                         //
+                        //  pyshell.end(function(err){
+                        //      if(err) next(err);
+                        //      var solnArr = raw.split('\n');
+                        //      for(var i = 0; i < solnArr.length; i++){
+                        //          var raws = solnArr[i].split(',');
+                        //          var solnRows = [];
+                        //          for(var j = 0; j < raws.length; j++) {
+                        //              var solnCols = [];
+                        //              for(var k = 0; k < raws.length; k++){
+                         //
+                        //                  solnCols.push(parseInt(raws[j][k]));
+                        //              }
+                        //              solnRows.push(solnCols);
+                        //          }
+                        //          returnArray.push(solnRows);
+                        //      }
+                        //      res.json({
+                        //          solutions: returnArray
+                        //      });
+                        //  });
+                        fs.readFile(config.rootname + '/output.txt', 'utf8', function(err, contents) {
+                            var puzzlesSolution = [];
+                            var solnArr = contents.trim().split('\n');
+                            var currentPuzzle = [];
+                            var solnRows = [];
+                            for(var i = 0; i < solnArr.length; i++){
+                                var raws = solnArr[i];
+                                if(raws == 'finished') {
+                                    puzzlesSolution.push(currentPuzzle);
+                                    currentPuzzle = [];
+                                } else if(raws.includes('=')) {
+                                    currentPuzzle.push(solnRows);
+                                    solnRows = [];
+                                } else if(raws == 'nosolutions'){
+                                    currentPuzzle.push('nosolutions');
+                                } else {
+                                    var solnCols = [];
+                                    for(var j = 0; j < raws.length; j++) {
+                                        solnCols.push(parseInt(raws.charAt(j)));
+                                    }
+                                    solnRows.push(solnCols);
+                                }
+                            }
 
-                         pyshell.end(function(err){
-                             if(err) next(err);
-                             var solnArr = raw.split('\n');
-                             for(var i = 0; i < solnArr.length; i++){
-                                 var raws = solnArr[i].split(',');
-                                 var solnRows = [];
-                                 for(var j = 0; j < raws.length; j++) {
-                                     var solnCols = [];
-                                     for(var k = 0; k < raws.length; k++){
-
-                                         solnCols.push(parseInt(raws[j][k]));
-                                     }
-                                     solnRows.push(solnCols);
-                                 }
-                                 returnArray.push(solnRows);
-                             }
-                             res.json({
-                                 solutions: returnArray
-                             });
-                         });
+                            res.json({
+                                solutions: puzzlesSolution
+                            });
+                        });
                      });
             });
         });

@@ -104,7 +104,6 @@ int main(){
 
 	for(i=0; i<numOfPuzzle; i++){
 	  fscanf( fp, "%d", &N);
-
 	  head = (board*)malloc(sizeof(board));
 	  head->b = (int**)malloc(sizeof(int*)*N);
 	  head->count = 0;
@@ -119,22 +118,33 @@ int main(){
 			}
 		}
 
-	// check if board is VALID
-	for(a=0; a<N; a++){
-		for(b=0; b<N; b++){
-			if(head->b[a][b] == 1 && !valid(head, N, a, b)){
-				validBoard = 0;
-				break;
-			}
-		}//close for
-	}//close for
+	// // check if board is VALID
+	// for(a=0; a<N; a++){
+	// 	for(b=0; b<N; b++){
+	// 		if(head->b[a][b] == 1 && !valid(head, N, a, b)){
+	// 			validBoard = 0;
+	// 			break;
+	// 		}
+	// 	}//close for
+	// }//close for
 
     /*********************************************/
     if(head->count == N){
-			++currNumOfSolutions;
+		++currNumOfSolutions;
+        for(j=0; j<N; j++){
+            for(k=0; k<N; k++){
+              fprintf(out, "%d", stack[tos]->b[j][k]);
+            }
+            fprintf(out, "\n");
+        }
+        for(j=0;j<N;j++){
+            fprintf(out, "=");
+        }
+        fprintf(out, "\n");
+        free(head);
 	}
 
-    if(validBoard && (currNumOfSolutions == 0)){
+    if(/*validBoard && */(currNumOfSolutions == 0)){
       	stack[tos++] = head;
 
 		while(tos!=0){
@@ -178,7 +188,7 @@ int main(){
 			  continue;
 			}
 
-			/* 
+			/*
       printf("tempRow: %d\n", row);
 			//if current row already contains a chancellor, skip
 			for(tempRow = row ; tempRow >= 0 ; tempRow--){
@@ -195,7 +205,7 @@ int main(){
 				  printf("\n");
 			}
       */
-      
+
 			for(col = N-1 ; col >= 0 ; col--){
 			  if(head->b[row][col] == 1) continue;
 			  temp = createBoard(head, N);
@@ -208,13 +218,15 @@ int main(){
 			// printf("\n");
 		} // CLOSE WHILE
 	/*********************************************/
-    }else if(!validBoard){
+    }/*else if(!validBoard){
     	// printf("Invalid board\n");
     }else{
     	// printf("Given board already a solution\n");
-    }
+    }*/
 
+    if(currNumOfSolutions == 0) fprintf(out, "nosolutions\n");
 	// printf("Current number of solutions: %i\n", currNumOfSolutions);
+    fprintf(out, "finished\n");
 	currNumOfSolutions = 0;
 	//Delete solutions
     }

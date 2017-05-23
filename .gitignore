@@ -2,4 +2,5 @@ node_modules/*
 app/bower_components/*
 c/a.out
 c/input.txt
+c/input2.txt
 c/output.txt

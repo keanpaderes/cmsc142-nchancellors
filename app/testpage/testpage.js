@@ -86,7 +86,7 @@ angular.module('nchancy.testpage', [
 						    		$(this).data('clicked', true);
 						    	}
 							});
-						} else{ 
+						} else{
 							if(j % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
 						    	if($(this).data('clicked')){
 						    		$(this).children("div").children("img").remove();
@@ -176,28 +176,29 @@ angular.module('nchancy.testpage', [
             return retString;
         }
 
-        function showSolutions(solutions){
-
-        	for(var i=0; i<solutions.length; i++){
-        		for(var j=0; j<solutions[i].length; j++){
-        			for(var k=0; k<solutions[i][j].length; k++){
-        				if(j % 2 == 1){
-							if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
-				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
-
-				    		if(solutions[i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
-						} else{ 
-							if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
-				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
-
-				    		if(solutions[i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
-						}
-				        $('#solutions').append(rowData);
-        			}
-        			$('#solutions').append('<br/>');
-        		}
-        		$('#solutions').append('<br/>');
-        	}
+        function showSolutions(puzzles){
+            // for(var h=0; h<puzzles.length; h++) {
+            // 	for(var i=0; i<solutions.length; i++){
+            // 		for(var j=0; j<solutions[i].length; j++){
+            // 			for(var k=0; k<solutions[i][j].length; k++){
+            // 				if(j % 2 == 1){
+    		// 					if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
+    		// 		    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
+            //
+    		// 		    		if(solutions[i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
+    		// 				} else{
+    		// 					if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
+    		// 		    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
+            //
+    		// 		    		if(solutions[i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
+    		// 				}
+    		// 		        $('#solutions').append(rowData);
+            // 			}
+            // 			$('#solutions').append('<br/>');
+            // 		}
+            // 		$('#solutions').append('<br/>');
+            // 	}
+            // }
         }
 
         function convertBoardToArray(){
@@ -237,7 +238,7 @@ angular.module('nchancy.testpage', [
         		}
         		listOfboard.push(array);
         	}
-        	
+
         	for(var i=0; i<listOfboard.length; i++){
         		if( !checkBoard(listOfboard[i], listOfboard[i].length) ){
         			return false;
@@ -264,7 +265,7 @@ angular.module('nchancy.testpage', [
 				else{
 					isValid = false;
 					$('#invalidBoard').modal('open');
-				} 
+				}
 			}
 
 			if(isValid){
