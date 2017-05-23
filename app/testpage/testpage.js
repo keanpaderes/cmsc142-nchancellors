@@ -225,7 +225,7 @@ angular.module('nchancy.testpage', [
             	list.append(divHeader);
             	var divBody = $('<div></div>').addClass('collapsible-body col s12'); 
             	divBody.append('<br/>');
-            	for(var i=0; i<puzzles[h].length; i++){
+            	for(var i=0; i<puzzles[h].length; i++){	
             		for(var j=0; j<puzzles[h][i].length; j++){
             			for(var k=0; k<puzzles[h][i][j].length; k++){
             				if(j % 2 == 1){
@@ -244,8 +244,10 @@ angular.module('nchancy.testpage', [
             			divBody.append('<br/>');
             		}
             		divBody.append('<br/>');
-            		list.append(divBody);
             	}
+            	var buttons = $(' <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="waves-effect waves-light btn col s3 offset-s2 cyan darken-4">Previous</button> <button ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1" class="waves-effect waves-light btn col s3 offset-s2 cyan darken-4">Next</button>');
+            		divBody.append(buttons);
+            		list.append(divBody);
             	$('#solutions').append(list);
             }
 
