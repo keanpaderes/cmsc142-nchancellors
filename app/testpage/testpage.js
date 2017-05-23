@@ -17,6 +17,11 @@ angular.module('nchancy.testpage', [
     	$(".button-collapse").sideNav();
     	$('.modal').modal();
     	$('.carousel').carousel();
+    	$('#reset').addClass('disabled');
+
+    	$('#reset').click(function(){
+			location.reload();
+		});
 
     	var inputBoard;
     	var isFileInput = false;
@@ -64,6 +69,7 @@ angular.module('nchancy.testpage', [
 			} else{
 				$('#fileButton').addClass('disabled');
 				$('#createBoard').addClass('disabled');
+				$('#reset').removeClass('disabled');
 
 				for(var i=0; i<N; i++){
 					for(var j=0; j<N; j++){
@@ -274,6 +280,7 @@ angular.module('nchancy.testpage', [
 	                input: solveBoard,
 	                size: N
 	            }).then(function successCallback(res) {
+	            	console.log(res.data.solutions);
                     showSolutions(res.data.solutions);
                 }, function errorCallback(err) {
                     console.log(err);
