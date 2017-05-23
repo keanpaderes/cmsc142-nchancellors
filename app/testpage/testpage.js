@@ -250,7 +250,6 @@ angular.module('nchancy.testpage', [
             		list.append(divBody);
             	$('#solutions').append(list);
             }
-
         }
 
         function convertBoardToArray(){
@@ -295,6 +294,11 @@ angular.module('nchancy.testpage', [
         		if( !checkBoard(listOfboard[i], listOfboard[i].length) ){
         			return false;
         			break;
+        		}else{
+        			if(checkIfSolved(listOfboard[i], listOfboard[i].length)){
+		    			$('#solvedTextFile').modal('open');
+		    			break;
+		    		}  
         		}
         	}
 
