@@ -16,8 +16,9 @@ angular.module('nchancy.testpage', [
 
     	$(".button-collapse").sideNav();
     	$('.modal').modal();
-    	$('.carousel').carousel();
+    	$('.collapsible').collapsible();
     	$('#reset').addClass('disabled');
+    	$('#solve').addClass('disabled');
 
     	$('#reset').click(function(){
 			location.reload();
@@ -36,6 +37,8 @@ angular.module('nchancy.testpage', [
 		function handleFileSelect(evt) {
 			isFileInput = true;
 			$('#createBoard').addClass('disabled');
+			$('#solve').removeClass('disabled');
+			$('#reset').removeClass('disabled');
 			var files = evt.target.files;
 
 			for (var i = 0, f; f = files[i]; i++) {
@@ -69,6 +72,7 @@ angular.module('nchancy.testpage', [
 			} else{
 				$('#fileButton').addClass('disabled');
 				$('#createBoard').addClass('disabled');
+				$('#solve').removeClass('disabled');
 				$('#reset').removeClass('disabled');
 
 				for(var i=0; i<N; i++){
@@ -81,6 +85,10 @@ angular.module('nchancy.testpage', [
 						    	} else{
 						    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 						    		$(this).data('clicked', true);
+						    		var array = convertBoardToArray();
+						    		if(checkIfSolved(array, N)){
+						    			$('#winner').modal('open');
+						    		}  
 						    	}
 							});
 				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
@@ -90,6 +98,10 @@ angular.module('nchancy.testpage', [
 						    	} else{
 						    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 						    		$(this).data('clicked', true);
+						    		var array = convertBoardToArray();
+						    		if(checkIfSolved(array, N)){
+						    			$('#winner').modal('open');
+						    		} 
 						    	}
 							});
 						} else{
@@ -100,6 +112,10 @@ angular.module('nchancy.testpage', [
 						    	} else{
 						    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 						    		$(this).data('clicked', true);
+						    		var array = convertBoardToArray();
+						    		if(checkIfSolved(array, N)){
+						    			$('#winner').modal('open');
+						    		} 
 						    	}
 							});
 				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black cell").css({"width": "calc(100%/"+ N +")", "padding-bottom": "calc(100%/"+ N +")"}).click(function() {
@@ -109,6 +125,10 @@ angular.module('nchancy.testpage', [
 						    	} else{
 						    		$(this).append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 						    		$(this).data('clicked', true);
+						    		var array = convertBoardToArray();
+						    		if(checkIfSolved(array, N)){
+						    			$('#winner').modal('open');
+						    		} 
 						    	}
 							});
 						}
@@ -159,6 +179,21 @@ angular.module('nchancy.testpage', [
 			return true;
 		}
 
+		function checkIfSolved(board, num){
+
+			var count = 0;
+			for(var a=0; a<num; a++){
+				for(var b=0; b<num; b++){
+					if(board[a][b] == 1 && valid(board, a, b, num)){
+						count++;
+					}
+				}
+			}
+			if(count == num) return true;
+			else return false;
+
+		}
+
 		/************************************************************/
 
 		function Create2DArray(rows) {
@@ -183,28 +218,37 @@ angular.module('nchancy.testpage', [
         }
 
         function showSolutions(puzzles){
-            // for(var h=0; h<puzzles.length; h++) {
-            // 	for(var i=0; i<solutions.length; i++){
-            // 		for(var j=0; j<solutions[i].length; j++){
-            // 			for(var k=0; k<solutions[i][j].length; k++){
-            // 				if(j % 2 == 1){
-    		// 					if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
-    		// 		    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
-            //
-    		// 		    		if(solutions[i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
-    		// 				} else{
-    		// 					if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
-    		// 		    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
-            //
-    		// 		    		if(solutions[i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
-    		// 				}
-    		// 		        $('#solutions').append(rowData);
-            // 			}
-            // 			$('#solutions').append('<br/>');
-            // 		}
-            // 		$('#solutions').append('<br/>');
-            // 	}
-            // }
+
+            for(var h=0; h<puzzles.length; h++) {
+            	var list = $('<li></li>');
+            	var divHeader = $('<div><b>BOARD '+ (h+1) +'</b> (' + puzzles[h].length + ' solution/s)</div>').addClass('collapsible-header');
+            	list.append(divHeader);
+            	var divBody = $('<div></div>').addClass('collapsible-body col s12'); 
+            	divBody.append('<br/>');
+            	for(var i=0; i<puzzles[h].length; i++){
+            		for(var j=0; j<puzzles[h][i].length; j++){
+            			for(var k=0; k<puzzles[h][i][j].length; k++){
+            				if(j % 2 == 1){
+    							if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
+    				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
+            
+    				    		if(puzzles[h][i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
+    						} else{
+    							if(k % 2 == 1) var rowData = $('<a></a>').addClass("waves-effect waves-light btn white");
+    				    		else var rowData = $('<a></a>').addClass("waves-effect waves-light btn black");
+            
+    				    		if(puzzles[h][i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
+    						}
+    				        divBody.append(rowData);
+            			}
+            			divBody.append('<br/>');
+            		}
+            		divBody.append('<br/>');
+            		list.append(divBody);
+            	}
+            	$('#solutions').append(list);
+            }
+
         }
 
         function convertBoardToArray(){
@@ -256,6 +300,7 @@ angular.module('nchancy.testpage', [
         }
 
 		$("#solve").click(function(){
+			$('#solve').addClass('disabled');
 			var solveBoard;
 			var isValid = true;
 
