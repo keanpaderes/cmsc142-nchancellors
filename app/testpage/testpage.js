@@ -17,6 +17,11 @@ angular.module('nchancy.testpage', [
     	$(".button-collapse").sideNav();
     	$('.modal').modal();
     	$('.carousel').carousel();
+    	$('#reset').addClass('disabled');
+
+    	$('#reset').click(function(){
+			location.reload();
+		});
 
     	var inputBoard;
     	var isFileInput = false;
@@ -64,6 +69,7 @@ angular.module('nchancy.testpage', [
 			} else{
 				$('#fileButton').addClass('disabled');
 				$('#createBoard').addClass('disabled');
+				$('#reset').removeClass('disabled');
 
 				for(var i=0; i<N; i++){
 					for(var j=0; j<N; j++){
@@ -179,6 +185,7 @@ angular.module('nchancy.testpage', [
         function showSolutions(solutions){
 
         	for(var i=0; i<solutions.length; i++){
+        		var divClass = $('<div></div>')
         		for(var j=0; j<solutions[i].length; j++){
         			for(var k=0; k<solutions[i][j].length; k++){
         				if(j % 2 == 1){
@@ -192,9 +199,11 @@ angular.module('nchancy.testpage', [
 
 				    		if(solutions[i][j][k] == 1) rowData.append('<div class="content"><img src="img/chancellor.png" class="image"></div>');
 						}
+				        //divClass.append(rowData);
 				        $('#solutions').append(rowData);
         			}
-        			$('#solutions').append('<br/>');
+        			 $('#solutions').append('<br/>');
+        			//$('#solutions').append(divClass);
         		}
         		$('#solutions').append('<br/>');
         	}
@@ -273,6 +282,7 @@ angular.module('nchancy.testpage', [
 	                input: solveBoard,
 	                size: N
 	            }).then(function successCallback(res) {
+	            	console.log(res.data.solutions);
                     showSolutions(res.data.solutions);
                 }, function errorCallback(err) {
                     console.log(err);
